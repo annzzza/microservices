@@ -4,19 +4,24 @@ import java.sql.SQLException;
 
 import org.springframework.web.bind.annotation.*;
 import fr.insa.soa.userManagementMS.database.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
+@RequestMapping("/users")
 public class UserController{
+	
+	@Autowired
+	private RestTemplate restTemplate;
 	
 	UserDAOImplementation dbOperations = new UserDAOImplementation();
 	
-	@GetMapping("/users/test")
+	@GetMapping("/test")
 	public int test() {
 		return 10000;
 	}
 	
 	
-	@PostMapping("/users/register/")
+	@PostMapping("/register/")
 	public User register(@RequestBody User user) {
 		try {
 			User otherUser = dbOperations.getUser(user.getUsername());
@@ -38,7 +43,7 @@ public class UserController{
 	
 	
 	
-	@GetMapping("/users/getuser/{username}")
+	@GetMapping("/getuser/{username}")
 	public User register(@PathVariable String username) {
 		try {
 			User user = dbOperations.getUser(username);
